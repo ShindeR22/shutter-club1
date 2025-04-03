@@ -444,7 +444,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = '/logo.svg' }) => {
                                 rel="noopener noreferrer"
                                 href='https://studio.shuttercloud.in'
                             >
-                                <div>Resister Studio</div>
+                                <div>Register Studio</div>
                             </a>
                         </InteractiveHoverButton>
                     </motion.div>
