@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { Star, ChevronDown } from "lucide-react";
+import { BorderBeam } from "./magicui/border-beam";
+import { motion } from "framer-motion";
 
 interface Photographer {
     name: string;
@@ -65,65 +67,241 @@ const photographers: Photographer[] = [
     },
 ];
 
-// Component for displaying star ratings
+// Component for displaying star ratings with animation
 const StarRating = ({ rating }: { rating: number }) => {
     return (
-        <div className="flex justify-center mt-2" role="img" aria-label={`${rating} out of 5 stars`}>
+        <div className="flex justify-center mt-3" role="img" aria-label={`${rating} out of 5 stars`}>
             {Array.from({ length: 5 }).map((_, index) => (
-                <Star
+                <motion.div
                     key={index}
-                    className={`h-5 w-5 ${index < rating ? "text-yellow-500" : "text-gray-300"
-                        }`}
-                    fill={index < rating ? "currentColor" : "none"}
-                />
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                        delay: 0.1 * index,
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20
+                    }}
+                >
+                    <Star
+                        className={`h-7 w-7 ${index < rating ? "text-yellow-500" : "text-gray-300"}`}
+                        fill={index < rating ? "currentColor" : "none"}
+                    />
+                </motion.div>
             ))}
         </div>
     );
 };
 
-export default function PhotographersPage() {
-    const [heading, setHeading] = useState("CONNECT WITH AMAZING WEDDING PHOTOGRAPHERS");
-
-    const handleShowMore = () => {
-        setHeading("MEET THE BEST WEDDING PHOTOGRAPHERS WORLDWIDE");
-    };
+// Photographer Card Component with hover effects
+const PhotographerCard = ({
+    photographer,
+    index,
+    isActive = false
+}: {
+    photographer: Photographer,
+    index: number,
+    isActive?: boolean
+}) => {
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <section className="container mx-auto py-12 px-6 text-center">
-            {/* Heading Section */}
-            <h1 className="text-3xl md:text-4xl font-bold mb-6">{heading}</h1>
-
-            {/* Photographer Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                {photographers.map((photographer) => (
-                    <Card key={photographer.name} className="text-center shadow-md">
-                        <CardHeader className="relative w-40 h-40 mx-auto">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+                opacity: 1,
+                y: 0,
+                scale: isActive ? 1.05 : 1
+            }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            className="h-full"
+        >
+            <Card
+                className={`text-center h-full transition-all duration-300 ${isHovered || isActive ? 'shadow-xl border-blue-400 border-2' : 'shadow-md'
+                    }`}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                <CardHeader className="relative w-56 h-56 mx-auto">
+                    <div className="w-full h-full rounded-full overflow-hidden">
+                        <motion.div
+                            animate={{ scale: isHovered ? 1.1 : 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="w-full h-full relative"
+                        >
                             <Image
                                 src={photographer.image}
                                 alt={`Portrait of ${photographer.name}`}
-                                fill
-                                className="rounded-full object-cover"
-                                sizes="(max-width: 768px) 100vw, 160px"
+                                width={300}       // set explicit width
+                                height={300}      // set explicit height to match width for a circle
+                                className="rounded-full object-cover"  // rounded-full makes it a circle
+                                sizes="(max-width: 768px) 100vw, 300px"
                                 loading="lazy"
                             />
-                        </CardHeader>
-                        <CardContent>
-                            <h3 className="text-lg font-semibold">{photographer.name}</h3>
-                            <p className="text-gray-500">{photographer.location}</p>
-                            <StarRating rating={photographer.rating} />
-                        </CardContent>
-                    </Card>
-                ))}
+
+                        </motion.div>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <motion.h3
+                        className="text-xl font-semibold mt-2"
+                        animate={{ color: isHovered ? '#3b82f6' : '#000000' }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {photographer.name}
+                    </motion.h3>
+                    <p className="text-gray-500 text-lg">{photographer.location}</p>
+                    <StarRating rating={photographer.rating} />
+                </CardContent>
+            </Card>
+        </motion.div>
+    );
+};
+
+export default function PhotographersPage() {
+    const [heading, setHeading] = useState("CONNECT WITH AMAZING WEDDING PHOTOGRAPHERS");
+    const [showAllPhotographers, setShowAllPhotographers] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+    // Add scroll effect for section entrance
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Auto cycle through highlighting different photographers
+        const interval = setInterval(() => {
+            setActiveIndex(prev => {
+                if (prev === null) return 0;
+                return (prev + 1) % photographers.length;
+            });
+        }, 3000);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearInterval(interval);
+        };
+    }, []);
+
+    const handleShowMore = () => {
+        setHeading("MEET THE BEST WEDDING PHOTOGRAPHERS WORLDWIDE");
+        setShowAllPhotographers(true);
+    };
+
+    const displayedPhotographers = showAllPhotographers
+        ? photographers
+        : photographers.slice(0, 4);
+
+    return (
+        <motion.section
+            className="container mx-auto py-12 px-6 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+        >
+            {/* Heading Section with Animation */}
+            <motion.div
+                initial={{ y: -50 }}
+                animate={{ y: 0 }}
+                transition={{ type: "spring", stiffness: 100 }}
+            >
+                <motion.h1
+                    className="text-3xl md:text-4xl font-bold mb-6 relative inline-block"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                >
+                    {heading}
+                    <motion.div
+                        className="absolute bottom-0 left-0 h-1 bg-blue-500 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: '100%' }}
+                        transition={{ delay: 0.5, duration: 0.8 }}
+                    />
+                </motion.h1>
+            </motion.div>
+
+            {/* Photographer Grid with Staggered Animation */}
+            <div>
+                <BorderBeam />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    {displayedPhotographers.map((photographer, index) => (
+                        <PhotographerCard
+                            key={photographer.name}
+                            photographer={photographer}
+                            index={index}
+                            isActive={index === activeIndex}
+                        />
+                    ))}
+                </div>
             </div>
 
-            {/* Change Heading Button */}
-            <Button
-                className="mt-6"
-                onClick={handleShowMore}
-                aria-label="Show more photographers"
-            >
-                Show More
-            </Button>
-        </section>
+            {/* Animated Show More Button */}
+            {!showAllPhotographers && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                >
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Button
+                            className="mt-6 relative overflow-hidden group"
+                            onClick={handleShowMore}
+                            aria-label="Show more photographers"
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                Show More
+                                <motion.div
+                                    animate={{ y: [0, 3, 0] }}
+                                    transition={{
+                                        repeat: Infinity,
+                                        duration: 1.5,
+                                        ease: "easeInOut"
+                                    }}
+                                >
+                                    <ChevronDown size={16} />
+                                </motion.div>
+                            </span>
+                            <motion.div
+                                className="absolute inset-0 bg-blue-600"
+                                initial={{ x: "-100%" }}
+                                whileHover={{ x: 0 }}
+                                transition={{ duration: 0.3 }}
+                            />
+                        </Button>
+                    </motion.div>
+                </motion.div>
+            )}
+
+            {/* Floating scroll-to-top button that appears after scrolling */}
+            {scrolled && (
+                <motion.button
+                    className="fixed bottom-8 right-8 bg-blue-500 text-white p-3 rounded-full shadow-lg"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Scroll to top"
+                >
+                    <motion.div
+                        animate={{ y: [0, -3, 0] }}
+                        transition={{
+                            repeat: Infinity,
+                            duration: 1.5
+                        }}
+                    >
+                        <ChevronDown size={24} className="transform rotate-180" />
+                    </motion.div>
+                </motion.button>
+            )}
+        </motion.section>
     );
 }
