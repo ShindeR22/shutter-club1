@@ -13,8 +13,7 @@ export default function PopularCities() {
         const cities = [
                 {
                         name: "Mumbai",
-                        mapUrl:
-                                "https://maps.googleapis.com/maps/api/staticmap?center=Mumbai,India&zoom=12&size=400x400&maptype=roadmap&style=feature:all|element:labels|visibility:off&style=feature:all|element:geometry|color:0xe2e2e2&key=YOUR_GOOGLE_MAPS_API_KEY",
+                        mapUrl: "https://maps.googleapis.com/maps/api/staticmap?center=Mumbai,India&zoom=12&size=400x400&maptype=roadmap&style=feature:all|element:labels|visibility:off&style=feature:all|element:geometry|color:0xe2e2e2&key=YOUR_GOOGLE_MAPS_API_KEY",
                 },
                 {
                         name: "Delhi",
