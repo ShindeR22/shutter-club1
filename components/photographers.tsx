@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Star, ChevronDown } from "lucide-react";
 // import { BorderBeam } from "./magicui/border-beam";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface Photographer {
     name: string;
@@ -102,6 +103,7 @@ const PhotographerCard = ({
 }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [prefersDark, setPrefersDark] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -110,6 +112,10 @@ const PhotographerCard = ({
         mediaQuery.addEventListener('change', handleChange);
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
+    const handleCardClick = () => {
+        // Navigate to a specific link as mentioned in your requirements
+        router.push('/photographerscard');
+    };
 
     return (
         <motion.div
@@ -134,6 +140,7 @@ const PhotographerCard = ({
                             animate={{ scale: isHovered ? 1.1 : 1 }}
                             transition={{ duration: 0.3 }}
                             className="w-full h-full relative"
+                            onClick={handleCardClick}
                         >
                             <Image
                                 src={photographer.image}

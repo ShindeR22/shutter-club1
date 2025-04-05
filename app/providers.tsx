@@ -27,7 +27,7 @@ export default function Providers({ children }: ProvidersProps) {
         return (
                 <Provider>
                         <QueryClientProvider client={queryClientRef.current}>
-                                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
                                         {children}
                                 </ThemeProvider>
                         </QueryClientProvider>

@@ -99,24 +99,24 @@ export const PhotographerCard = ({ photographer }: PhotographerCardProps) => {
                         <div className="flex flex-col justify-between w-1/2 p-6">
                                 {/* Studio Info */}
                                 <div>
-                                        <div className="flex items-center mb-2">
-                                                <Image src={photographer.logo} alt="Logo" width={32} height={32} className="rounded-full mr-2" />
+                                        <div className="flex items-center mb-2 ">
+                                                <Image src={photographer.logo} alt="Logo" width={56} height={56} className="rounded-full mr-2" />
                                                 <div>
                                                         <h2 className="text-lg font-semibold">{photographer.studioName}</h2>
-                                                        <p className="text-sm text-gray-500">{photographer.location}</p>
+                                                        <p className="text-sm ">{photographer.location}</p>
                                                 </div>
                                         </div>
 
                                         {/* Rating */}
                                         <div className="flex items-center mb-3">
-                                                <span className="text-sm font-medium text-gray-700 mr-2">Rating:</span>
+                                                <span className="text-sm font-medium  mr-2">Rating:</span>
                                                 <div className="flex">{renderRatingStars(photographer.rating)}</div>
-                                                <span className="ml-2 text-sm text-gray-500">({photographer.rating})</span>
+                                                <span className="ml-2 text-sm ">({photographer.rating})</span>
                                         </div>
 
                                         {/* Categories */}
                                         <div>
-                                                <h3 className="text-sm font-medium text-gray-700 mb-1">Specialties:</h3>
+                                                <h3 className="text-sm font-medium  mb-1">Specialties:</h3>
                                                 <div className="flex flex-wrap gap-2">
                                                         {photographer.categories.map((cat) => (
                                                                 <span
@@ -133,7 +133,7 @@ export const PhotographerCard = ({ photographer }: PhotographerCardProps) => {
                                 {/* Actions */}
                                 <div className="flex gap-2 mt-4">
                                         <Button variant="outline" className="flex-1">Contact</Button>
-                                        <Button className="flex-1 bg-blue-600 text-white hover:bg-blue-700">Get Quotation</Button>
+                                        <Button className="flex-1 bg-gradient-to-r from-blue-500 to-violet-500 rounded-lg font-medium text-white hover:shadow-lg hover:shadow-blue-500/30 transition duration-300">Get Quotation</Button>
                                 </div>
                         </div>
                 </Card>

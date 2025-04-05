@@ -1,35 +1,33 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { Menu, X, ChevronDown } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ModeToggle } from "./themebutton"
-// import { ModeToggle } from "./mode-toggle"
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { Menu, X, ChevronDown, User } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "./themebutton";
 
-// Type definitions
 type CategoryItem = {
-    name: string
-    href: string
-    description: string
-}
+    name: string;
+    href: string;
+    description: string;
+};
 
 type CityItem = {
-    city: string
+    city: string;
     location: {
-        lat: number
-        long: number
-    }
-}
+        lat: number;
+        long: number;
+    };
+};
 
 type NavbarProps = {
-    logo?: string
-    brandName?: string
-}
+    logo?: string;
+    brandName?: string;
+    showRegisterStudio?: boolean;
+};
 
 // Sample data for categories
 const categories: CategoryItem[] = [
@@ -63,7 +61,7 @@ const categories: CategoryItem[] = [
         href: "/categories/school-college-event-photography",
         description: "Covers functions, sports, drama, and reunions.",
     },
-]
+];
 
 // Sample data for cities
 const cities: CityItem[] = [
@@ -115,53 +113,70 @@ const cities: CityItem[] = [
         location: { lat: 21.1458, long: 79.0882 },
         city: "Nagpur",
     },
-]
+];
 
-const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutter Club" }) => {
-    const [isScrolled, setIsScrolled] = useState(false)
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [categoriesOpen, setCategoriesOpen] = useState(false)
-    const [citiesOpen, setCitiesOpen] = useState(false)
-    const { scrollY } = useScroll()
+// Mock user data – in a real app, this will come from your auth state
+const mockUser = {
+    name: "Rushikesh Shinde",
+    city: "Pune",
+    phone: "+91 7558250015",
+    loggedIn: true, // Change to false if the user is not logged in
+};
+
+const Navbar: React.FC<NavbarProps> = ({
+    logo = "/logo.svg",
+    brandName = "Shutter Club",
+    showRegisterStudio = true,
+}) => {
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [categoriesOpen, setCategoriesOpen] = useState(false);
+    const [citiesOpen, setCitiesOpen] = useState(false);
+    const { scrollY } = useScroll();
+    const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
     // Enhanced reveal animations based on scroll position
-    const borderOpacity = useTransform(scrollY, [0, 50], [0.1, 0.6])
-    const backdropBlur = useTransform(scrollY, [0, 100], [3, 12])
-    const bgOpacity = useTransform(scrollY, [0, 100], [0.3, 0.7])
+    const borderOpacity = useTransform(scrollY, [0, 50], [0.1, 0.6]);
+    const backdropBlur = useTransform(scrollY, [0, 100], [3, 12]);
+    const bgOpacity = useTransform(scrollY, [0, 100], [0.3, 0.7]);
 
-    // Handle scroll effect
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10)
-        }
+            setIsScrolled(window.scrollY > 10);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
-        window.addEventListener("scroll", handleScroll)
-        return () => {
-            window.removeEventListener("scroll", handleScroll)
-        }
-    }, [])
-
-    // Custom hook for responsive design
     const useDisplayScaling = () => {
-        const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0)
+        const [windowWidth, setWindowWidth] = useState(
+            typeof window !== "undefined" ? window.innerWidth : 0
+        );
 
         useEffect(() => {
             const handleResize = () => {
-                setWindowWidth(window.innerWidth)
-            }
+                setWindowWidth(window.innerWidth);
+            };
 
-            window.addEventListener("resize", handleResize)
-            return () => {
-                window.removeEventListener("resize", handleResize)
-            }
-        }, [])
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        }, []);
 
-        const isScaledDisplay = windowWidth < 1280
+        const isScaledDisplay = windowWidth < 1280;
+        return { isScaledDisplay, windowWidth };
+    };
 
-        return { isScaledDisplay, windowWidth }
-    }
+    const { isScaledDisplay, windowWidth } = useDisplayScaling();
+    // Sample login/logout handlers
+    const handleLogin = () => {
+        // Add your login logic here
+        console.log("Logging in...");
+    };
 
-    const { isScaledDisplay, windowWidth } = useDisplayScaling()
+    const handleLogout = () => {
+        // Add your logout logic here
+        console.log("Logging out...");
+    };
 
     return (
         <>
@@ -172,13 +187,18 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 style={{
                     borderColor: `rgba(39, 39, 45, ${borderOpacity.get()})`,
-                    boxShadow: isScrolled ? "0 8px 32px rgba(0, 0, 0, 0.15)" : "none",
+                    boxShadow: isScrolled
+                        ? "0 8px 32px rgba(0, 0, 0, 0.15)"
+                        : "none",
                     backdropFilter: `blur(${backdropBlur.get()}px)`,
                     backgroundColor: `rgba(15, 15, 20, ${bgOpacity.get()})`,
                 }}
             >
                 <div
-                    className={cn("container flex items-center px-4 md:px-6 lg:px-8 max-w-7xl mx-auto", "h-12 md:h-18 lg:h-20")}
+                    className={cn(
+                        "container flex items-center px-4 md:px-6 lg:px-8 max-w-7xl mx-auto",
+                        "h-12 md:h-18 lg:h-20"
+                    )}
                 >
                     {/* Mobile menu button */}
                     <button
@@ -199,7 +219,12 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                             transition={{ duration: 0.5, delay: 0.1 }}
                         >
                             <Link href="/" className="relative mr-6 flex items-center space-x-2">
-                                <div className={cn("rounded-full flex items-center justify-center", "size-8 lg:size-9 xl:size-10")}>
+                                <div
+                                    className={cn(
+                                        "rounded-full flex items-center justify-center",
+                                        "size-8 lg:size-9 xl:size-10"
+                                    )}
+                                >
                                     <Image
                                         src={logo || "/placeholder.svg"}
                                         alt={`${brandName} Logo`}
@@ -208,18 +233,23 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                                         className="w-auto h-auto"
                                     />
                                 </div>
-                                <span className={cn("hidden font-bold md:inline-block", "text-lg lg:text-xl")}>{brandName}</span>
+                                <span className={cn("hidden font-bold md:inline-block", "text-lg lg:text-xl")}>
+                                    {brandName}
+                                </span>
                             </Link>
                         </motion.div>
 
                         {/* Desktop Navigation */}
                         <nav
-                            className={cn("hidden items-center space-x-6 xl:space-x-8 font-medium xl:flex", "text-sm lg:text-base")}
+                            className={cn(
+                                "hidden items-center space-x-6 xl:space-x-8 font-medium xl:flex",
+                                "text-sm lg:text-base"
+                            )}
                         >
                             {/* Categories dropdown */}
                             <div className="relative">
                                 <button
-                                    className="flex items-center justify-center transition-colors text-white "
+                                    className="flex items-center justify-center transition-colors text-white"
                                     onMouseEnter={() => setCategoriesOpen(true)}
                                     onClick={() => setCategoriesOpen(!categoriesOpen)}
                                     aria-expanded={categoriesOpen}
@@ -237,7 +267,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                                         <motion.div
                                             className={cn(
                                                 "absolute left-0 mt-2 rounded-lg shadow-xl bg-zinc-900/95 dark:bg-zinc-900/95 backdrop-blur-xl ring-1 ring-zinc-800/50 text-zinc-200 border border-zinc-800/30",
-                                                "w-56 lg:w-64 xl:w-72",
+                                                "w-56 lg:w-64 xl:w-72"
                                             )}
                                             initial={{ opacity: 0, y: 8, scale: 0.95 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -257,11 +287,13 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                                                             href={category.href}
                                                             className={cn(
                                                                 "block hover:bg-zinc-800/50 transition-colors",
-                                                                "py-2.5 px-3 lg:py-3 lg:px-4",
+                                                                "py-2.5 px-3 lg:py-3 lg:px-4"
                                                             )}
                                                         >
                                                             <p className="font-medium text-sm lg:text-base">{category.name}</p>
-                                                            <p className="text-zinc-400 mt-0.5 text-xs lg:text-sm">{category.description}</p>
+                                                            <p className="text-zinc-400 mt-0.5 text-xs lg:text-sm">
+                                                                {category.description}
+                                                            </p>
                                                         </Link>
                                                     </motion.div>
                                                 ))}
@@ -274,7 +306,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                             {/* Cities dropdown */}
                             <div className="relative">
                                 <button
-                                    className="flex items-center justify-center transition-colors text-white "
+                                    className="flex items-center justify-center transition-colors text-white"
                                     onMouseEnter={() => setCitiesOpen(true)}
                                     onClick={() => setCitiesOpen(!citiesOpen)}
                                     aria-expanded={citiesOpen}
@@ -292,7 +324,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                                         <motion.div
                                             className={cn(
                                                 "absolute left-0 mt-2 rounded-lg shadow-xl bg-zinc-900/95 dark:bg-zinc-900/95 backdrop-blur-xl ring-1 ring-zinc-800/50 text-zinc-200 border border-zinc-800/30",
-                                                "w-56 lg:w-64 xl:w-72",
+                                                "w-56 lg:w-64 xl:w-72"
                                             )}
                                             initial={{ opacity: 0, y: 8, scale: 0.95 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -317,8 +349,6 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                                     )}
                                 </AnimatePresence>
                             </div>
-
-
                         </nav>
                     </div>
 
@@ -338,28 +368,80 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
 
                     {/* Right side */}
                     <div className="flex flex-1 items-center justify-end gap-3">
-                        {/* Register Studio button - only visible on desktop */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                            className="hidden md:block"
-                        >
-                            <Button
-                                className="bg-gradient-to-l to-slate-900 text-white shadow-md hover:shadow-lg transition-all duration-300"
-                                size="sm"
+                        {/* Conditionally render Register Studio button - only visible on desktop */}
+                        {showRegisterStudio && (
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                className="hidden md:block"
                             >
-                                <a
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://studio.shutterclub.in"
-                                    className="flex items-center"
+                                <Button
+                                    className="bg-gradient-to-l to-slate-900 text-white shadow-md hover:shadow-lg transition-all duration-300"
+                                    size="sm"
                                 >
-                                    Register Studio
-                                </a>
-                            </Button>
-                        </motion.div>
-
+                                    <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        href="https://studio.shuttercloud.in"
+                                        className="flex items-center"
+                                    >
+                                        Register Studio
+                                    </a>
+                                </Button>
+                            </motion.div>
+                        )}
+                        {/* User Icon with dropdown trigger */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setUserDropdownOpen((prev) => !prev)}
+                                className="flex items-center justify-center p-2 rounded-full hover:bg-zinc-800/50 transition-colors"
+                                aria-label="User menu"
+                            >
+                                <User size={24} className="text-white" />
+                            </button>
+                            {/* User dropdown */}
+                            <AnimatePresence>
+                                {userDropdownOpen && (
+                                    <motion.div
+                                        className="absolute right-0 mt-2 w-60 rounded-lg bg-zinc-900/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-zinc-800/30 shadow-lg z-50"
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        onMouseLeave={() => setUserDropdownOpen(false)}
+                                    >
+                                        <div className="p-4">
+                                            {mockUser.loggedIn ? (
+                                                <>
+                                                    <p className="text-white font-medium">{mockUser.name}</p>
+                                                    <p className="text-sm text-zinc-400 mt-1">City: {mockUser.city}</p>
+                                                    <p className="text-sm text-zinc-400 mt-1">Phone: {mockUser.phone}</p>
+                                                    <Button
+                                                        onClick={handleLogout}
+                                                        className="mt-3 w-full bg-red-600 hover:bg-red-700"
+                                                        size="sm"
+                                                    >
+                                                        Logout
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p className="text-white font-medium mb-2">Welcome!</p>
+                                                    <Button
+                                                        onClick={handleLogin}
+                                                        className="w-full bg-green-600 hover:bg-green-700"
+                                                        size="sm"
+                                                    >
+                                                        Login
+                                                    </Button>
+                                                </>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                         {/* Theme toggle */}
                         <div>
                             <ModeToggle />
@@ -485,7 +567,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                 </AnimatePresence>
             </motion.header>
         </>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

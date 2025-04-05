@@ -11,15 +11,21 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Search, X, } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function SearchBar() {
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState("");
+    const router = useRouter();
     // const [showFilters, setShowFilters] = useState(false);
 
     // Clear search input
     const clearSearch = () => {
         setSearchTerm("");
+    };
+    const handleSearchClick = () => {
+        // You can add any additional logic here if needed before navigation
+        router.push("/photographerscard");
     };
 
     return (
@@ -67,11 +73,14 @@ export function SearchBar() {
 
                 {/* Search Button - 20% width */}
                 <div className="w-[20%] flex space-x-2">
+
                     <Button
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-r-lg shadow-sm font-medium transition-colors"
+                        onClick={handleSearchClick}
+                        className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-violet-500 rounded-lg font-medium text-white hover:shadow-lg hover:shadow-blue-500/30 transition duration-300"
                     >
                         Search
                     </Button>
+
                     {/* <Button
                         variant="outline"
                         className="px-3 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-100 bg-white shadow-sm"
