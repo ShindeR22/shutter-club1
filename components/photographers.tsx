@@ -114,7 +114,7 @@ const PhotographerCard = ({
     }, []);
     const handleCardClick = () => {
         // Navigate to a specific link as mentioned in your requirements
-        router.push('/photographerscard');
+        router.push('/profile');
     };
 
     return (

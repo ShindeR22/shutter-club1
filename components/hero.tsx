@@ -1,7 +1,14 @@
+"use client";
+import { useRouter } from "next/navigation";
 import { SearchBar } from "./SearchBar";
 import { BackgroundLines } from "./ui/background-lines";
 
 export default function Hero() {
+        const router = useRouter();
+        const handleSearchClick = () => {
+                // You can add any additional logic here if needed before navigation
+                router.push("/photographerscard");
+        };
         return (
                 <BackgroundLines>
                         <section className="relative h-screen bg-gradient-to-br  to-slate-900 overflow-hidden">
@@ -54,9 +61,16 @@ export default function Hero() {
                                         {/* CTA Buttons */}
                                         <div className="flex flex-col sm:flex-row gap-4 mb-12">
                                                 <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-violet-500 rounded-lg font-medium text-white hover:shadow-lg hover:shadow-blue-500/30 transition duration-300">
-                                                        View Portfolio
+                                                        <a
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                href="https://studio.shuttercloud.in"
+                                                                className="flex items-center"
+                                                        >
+                                                                View Portfolio
+                                                        </a>
                                                 </button>
-                                                <button className="px-8 py-3 bg-white/10 backdrop-blur-md rounded-lg font-medium text-white border border-white/20 hover:bg-white/20 transition duration-300">
+                                                <button onClick={handleSearchClick} className="px-8 py-3 bg-white/10 backdrop-blur-md rounded-lg font-medium text-white border border-white/20 hover:bg-white/20 transition duration-300">
                                                         Get Qutation
                                                 </button>
                                         </div>

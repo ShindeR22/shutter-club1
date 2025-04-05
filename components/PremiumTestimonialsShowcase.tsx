@@ -77,7 +77,15 @@ const PremiumTestimonialsShowcase = () => {
 
                                 <div className="flex justify-center mt-16">
                                         <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-violet-500 rounded-lg font-medium text-white hover:shadow-lg hover:shadow-blue-500/30 transition duration-300">
-                                                Join Our Premium Network
+                                                <a
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        href="https://studio.shuttercloud.in"
+                                                        className="flex items-center"
+                                                >
+                                                        Join Our Premium Network
+                                                </a>
+
                                         </button>
                                 </div>
                         </div>
