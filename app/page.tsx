@@ -1,6 +1,7 @@
 // import AnimatedTestimonialsDemo from "@/components/animated-testimonials-demo";
-import BestClicks from "@/components/best-clicks";
+// import BestClicks from "@/components/best-clicks";
 // import PopularCities from "@/components/cities";
+// import AnimatedTestimonialsDemo from "@/components/animated-testimonials-demo";
 import GetQuotation from "@/components/get-quotation";
 // import Footer from "@/components/Footer";
 import Hero from "@/components/hero";
@@ -16,7 +17,7 @@ export default function Home() {
       <Hero />
       <Photographers />
       <PremiumTestimonialsShowcase />
-      <BestClicks />
+      {/* <BestClicks /> */}
       {/* <PopularCities /> */}
       <GetQuotation />
       {/* <AnimatedTestimonialsDemo /> */}

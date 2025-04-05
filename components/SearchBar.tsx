@@ -27,7 +27,7 @@ export function SearchBar() {
             {/* Main search row */}
             <div className="flex items-center space-x-2 w-full">
                 {/* Category Select - 30% width */}
-                <div className="w-[30%]">
+                <div className="w-[30%] ">
                     <Select value={category} onValueChange={setCategory}>
                         <SelectTrigger className="border border-gray-300 rounded-l-lg text-gray-700 px-4 py-2.5 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm">
                             <SelectValue placeholder="Select Category" />

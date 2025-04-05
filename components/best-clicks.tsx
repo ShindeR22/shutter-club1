@@ -9,15 +9,15 @@ import { Button } from "@/components/ui/button";
 const photographers = [
         {
                 name: "Pasquale Minniti",
-                images: ["/photos/photo1.jpg", "/photos/photo2.jpg", "/photos/photo3.jpg"],
+                images: ["https://images.pexels.com/photos/1707446/pexels-photo-1707446.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/7669988/pexels-photo-7669988.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load", "/photos/photo3.jpg"],
         },
         {
                 name: "Vinci Wang",
-                images: ["/photos/photo4.jpg", "/photos/photo5.jpg", "/photos/photo6.jpg"],
+                images: ["https://images.pexels.com/photos/5759191/pexels-photo-5759191.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "/photos/photo5.jpg", "/photos/photo6.jpg"],
         },
         {
                 name: "David Murray",
-                images: ["/photos/photo7.jpg", "/photos/photo8.jpg", "/photos/photo9.jpg"],
+                images: ["https://images.pexels.com/photos/7180628/pexels-photo-7180628.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/7155971/pexels-photo-7155971.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "/photos/photo9.jpg"],
         },
 ];
 

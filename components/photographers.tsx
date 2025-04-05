@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, ChevronDown } from "lucide-react";
-import { BorderBeam } from "./magicui/border-beam";
+// import { BorderBeam } from "./magicui/border-beam";
 import { motion } from "framer-motion";
 
 interface Photographer {
@@ -15,7 +15,6 @@ interface Photographer {
     image: string;
 }
 
-// Moved photographers data outside the component to prevent re-creation on each render
 const photographers: Photographer[] = [
     {
         name: "Pasquale Minniti",
@@ -67,7 +66,6 @@ const photographers: Photographer[] = [
     },
 ];
 
-// Component for displaying star ratings with animation
 const StarRating = ({ rating }: { rating: number }) => {
     return (
         <div className="flex justify-center mt-3" role="img" aria-label={`${rating} out of 5 stars`}>
@@ -93,7 +91,6 @@ const StarRating = ({ rating }: { rating: number }) => {
     );
 };
 
-// Photographer Card Component with hover effects
 const PhotographerCard = ({
     photographer,
     index,
@@ -104,6 +101,15 @@ const PhotographerCard = ({
     isActive?: boolean
 }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [prefersDark, setPrefersDark] = useState(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        setPrefersDark(mediaQuery.matches);
+        const handleChange = (e: MediaQueryListEvent) => setPrefersDark(e.matches);
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, []);
 
     return (
         <motion.div
@@ -115,11 +121,10 @@ const PhotographerCard = ({
             }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
             whileHover={{ scale: 1.05 }}
-            className="h-full"
+            className="h-full "
         >
             <Card
-                className={`text-center h-full transition-all duration-300 ${isHovered || isActive ? 'shadow-xl border-blue-400 border-2' : 'shadow-md'
-                    }`}
+                className={`text-center h-full transition-all duration-300 ${isHovered || isActive ? 'shadow-xl border-blue-400 border-2' : 'shadow-md'}`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
@@ -133,20 +138,21 @@ const PhotographerCard = ({
                             <Image
                                 src={photographer.image}
                                 alt={`Portrait of ${photographer.name}`}
-                                width={300}       // set explicit width
-                                height={300}      // set explicit height to match width for a circle
-                                className="rounded-full object-cover"  // rounded-full makes it a circle
+                                width={300}
+                                height={300}
+                                className="rounded-full object-cover"
                                 sizes="(max-width: 768px) 100vw, 300px"
                                 loading="lazy"
                             />
-
                         </motion.div>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <motion.h3
                         className="text-xl font-semibold mt-2"
-                        animate={{ color: isHovered ? '#3b82f6' : '#000000' }}
+                        animate={{
+                            color: isHovered ? '#3b82f6' : (prefersDark ? '#ffffff' : '#000000')
+                        }}
                         transition={{ duration: 0.3 }}
                     >
                         {photographer.name}
@@ -160,12 +166,11 @@ const PhotographerCard = ({
 };
 
 export default function PhotographersPage() {
-    const [heading, setHeading] = useState("CONNECT WITH AMAZING WEDDING PHOTOGRAPHERS");
+    const [heading, setHeading] = useState("CONNECT WITH AMAZING PHOTOGRAPHERS");
     const [showAllPhotographers, setShowAllPhotographers] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-    // Add scroll effect for section entrance
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
@@ -173,7 +178,6 @@ export default function PhotographersPage() {
 
         window.addEventListener('scroll', handleScroll);
 
-        // Auto cycle through highlighting different photographers
         const interval = setInterval(() => {
             setActiveIndex(prev => {
                 if (prev === null) return 0;
@@ -198,12 +202,29 @@ export default function PhotographersPage() {
 
     return (
         <motion.section
-            className="container mx-auto py-12 px-6 text-center"
+            className="container mx-auto py-12 px-6 text-center to-slate-900 relative max-w-screen "
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
         >
-            {/* Heading Section with Animation */}
+            {/* Background abstract elements */}
+            <div className="absolute inset-0 -z-10 opacity-20">
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+            </div>
+
+            {/* Grid pattern overlay */}
+            <div
+                className="absolute inset-0 -z-10 opacity-0"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                    backgroundSize: '20px 20px'
+                }}
+            />
+
+            {/* Section title */}
             <motion.div
                 initial={{ y: -50 }}
                 animate={{ y: 0 }}
@@ -225,22 +246,27 @@ export default function PhotographersPage() {
                 </motion.h1>
             </motion.div>
 
-            {/* Photographer Grid with Staggered Animation */}
-            <div>
-                <BorderBeam />
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    {displayedPhotographers.map((photographer, index) => (
-                        <PhotographerCard
-                            key={photographer.name}
-                            photographer={photographer}
-                            index={index}
-                            isActive={index === activeIndex}
-                        />
-                    ))}
-                </div>
+            {/* Top wave */}
+            <div className="absolute top-0 left-0 right-0 rotate-180">
+                <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 80L48 74.7C96 69.3 192 58.7 288 53.3C384 48 480 48 576 58.7C672 69.3 768 90.7 864 90.7C960 90.7 1056 69.3 1152 64C1248 58.7 1344 69.3 1392 74.7L1440 80V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0V80Z" fill="white" fillOpacity="0.05" />
+                </svg>
             </div>
 
-            {/* Animated Show More Button */}
+            {/* Cards */}
+            {/* <BorderBeam /> */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+                {displayedPhotographers.map((photographer, index) => (
+                    <PhotographerCard
+                        key={photographer.name}
+                        photographer={photographer}
+                        index={index}
+                        isActive={index === activeIndex}
+                    />
+                ))}
+            </div>
+
+            {/* Show more button */}
             {!showAllPhotographers && (
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -280,7 +306,7 @@ export default function PhotographersPage() {
                 </motion.div>
             )}
 
-            {/* Floating scroll-to-top button that appears after scrolling */}
+            {/* Scroll to top button */}
             {scrolled && (
                 <motion.button
                     className="fixed bottom-8 right-8 bg-blue-500 text-white p-3 rounded-full shadow-lg"
@@ -302,6 +328,12 @@ export default function PhotographersPage() {
                     </motion.div>
                 </motion.button>
             )}
+            {/* Bottom Wave */}
+            <div className="absolute bottom-0 left-0 right-0">
+                <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 80L48 74.7C96 69.3 192 58.7 288 53.3C384 48 480 48 576 58.7C672 69.3 768 90.7 864 90.7C960 90.7 1056 69.3 1152 64C1248 58.7 1344 69.3 1392 74.7L1440 80V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0V80Z" fill="white" fillOpacity="0.05" />
+                </svg>
+            </div>
         </motion.section>
     );
 }

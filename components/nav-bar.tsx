@@ -178,7 +178,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                 }}
             >
                 <div
-                    className={cn("container flex items-center px-4 md:px-6 lg:px-8 max-w-7xl mx-auto", "h-16 md:h-18 lg:h-20")}
+                    className={cn("container flex items-center px-4 md:px-6 lg:px-8 max-w-7xl mx-auto", "h-12 md:h-18 lg:h-20")}
                 >
                     {/* Mobile menu button */}
                     <button
@@ -219,7 +219,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                             {/* Categories dropdown */}
                             <div className="relative">
                                 <button
-                                    className="flex items-center justify-center transition-colors hover:text-white text-zinc-400"
+                                    className="flex items-center justify-center transition-colors text-white "
                                     onMouseEnter={() => setCategoriesOpen(true)}
                                     onClick={() => setCategoriesOpen(!categoriesOpen)}
                                     aria-expanded={categoriesOpen}
@@ -274,7 +274,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                             {/* Cities dropdown */}
                             <div className="relative">
                                 <button
-                                    className="flex items-center justify-center transition-colors hover:text-white text-zinc-400"
+                                    className="flex items-center justify-center transition-colors text-white "
                                     onMouseEnter={() => setCitiesOpen(true)}
                                     onClick={() => setCitiesOpen(!citiesOpen)}
                                     aria-expanded={citiesOpen}
@@ -318,14 +318,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                                 </AnimatePresence>
                             </div>
 
-                            {/* Additional nav items can be added here */}
-                            <Link href="/about" className="transition-colors hover:text-white text-zinc-400">
-                                About
-                            </Link>
 
-                            <Link href="/contact" className="transition-colors hover:text-white text-zinc-400">
-                                Contact
-                            </Link>
                         </nav>
                     </div>
 
@@ -353,7 +346,7 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
                             className="hidden md:block"
                         >
                             <Button
-                                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-md hover:shadow-lg transition-all duration-300"
+                                className="bg-gradient-to-l to-slate-900 text-white shadow-md hover:shadow-lg transition-all duration-300"
                                 size="sm"
                             >
                                 <a
@@ -496,4 +489,3 @@ const Navbar: React.FC<NavbarProps> = ({ logo = "/logo.svg", brandName = "Shutte
 }
 
 export default Navbar
-

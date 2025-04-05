@@ -29,7 +29,13 @@ export default function GetQuotation() {
         };
 
         return (
-                <section className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 overflow-hidden">
+                <section className="relative bg-gradient-to-br  to-slate-900 overflow-hidden">
+                        {/* Top wave */}
+                        <div className="absolute top-0 left-0 right-0 rotate-180">
+                                <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 80L48 74.7C96 69.3 192 58.7 288 53.3C384 48 480 48 576 58.7C672 69.3 768 90.7 864 90.7C960 90.7 1056 69.3 1152 64C1248 58.7 1344 69.3 1392 74.7L1440 80V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0V80Z" fill="white" fillOpacity="0.05" />
+                                </svg>
+                        </div>
                         {/* Abstract Background Elements */}
                         <div className="absolute inset-0 opacity-20">
                                 <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
@@ -73,7 +79,7 @@ export default function GetQuotation() {
                                                                         className="bg-white/20 border-white/10 text-white placeholder:text-blue-100/60"
                                                                 />
                                                         </div>
-                                                        <div className="space-y-2">
+                                                        {/* <div className="space-y-2">
                                                                 <Label className="text-white">Email</Label>
                                                                 <Input
                                                                         type="email"
@@ -83,7 +89,7 @@ export default function GetQuotation() {
                                                                         required
                                                                         className="bg-white/20 border-white/10 text-white placeholder:text-blue-100/60"
                                                                 />
-                                                        </div>
+                                                        </div> */}
                                                         <div className="space-y-2">
                                                                 <Label className="text-white">Phone</Label>
                                                                 <Input
@@ -95,7 +101,7 @@ export default function GetQuotation() {
                                                                         className="bg-white/20 border-white/10 text-white placeholder:text-blue-100/60"
                                                                 />
                                                         </div>
-                                                        <div className="space-y-2">
+                                                        {/* <div className="space-y-2">
                                                                 <Label className="text-white">Event Date</Label>
                                                                 <Input
                                                                         type="date"
@@ -105,7 +111,7 @@ export default function GetQuotation() {
                                                                         required
                                                                         className="bg-white/20 border-white/10 text-white placeholder:text-blue-100/60"
                                                                 />
-                                                        </div>
+                                                        </div> */}
                                                         <div className="space-y-2">
                                                                 <Label className="text-white">Location</Label>
                                                                 <Input
@@ -159,7 +165,7 @@ export default function GetQuotation() {
                                                         {[
                                                                 { name: "Pasquale Minniti", rating: 5, location: "Mumbai" },
                                                                 { name: "Vinci Wang", rating: 4, location: "Pune" },
-                                                                { name: "David Murray", rating: 4.5, location: "Delhi" },
+                                                                // { name: "David Murray", rating: 4.5, location: "Delhi" },
                                                         ].map((photographer, index) => (
                                                                 <Card key={index} className="bg-white/10 backdrop-blur-md border-white/20 text-white">
                                                                         <CardHeader>
