@@ -5,6 +5,7 @@ import React from "react";
 import { SearchBar } from "@/components/SearchBar";
 import { PhotographerCard } from "./card";
 import Navbar from "@/components/nav-bar";
+import Footer from "@/components/Footer";
 
 const photographers = [
         {
@@ -171,6 +172,7 @@ export default function PhotographerGridPage() {
                                         <PhotographerCard key={photographer.id} photographer={photographer} />
                                 ))}
                         </div>
+                        <Footer />
                 </div>
         );
 }

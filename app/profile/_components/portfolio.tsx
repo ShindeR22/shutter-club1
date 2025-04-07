@@ -13,7 +13,23 @@ interface EventTypesSectionProps {
 
 export default function Portfolio({ eventTypes }: EventTypesSectionProps) {
         return (
-                <section className="py-20 bg-gray-900">
+                <section className="py-20 bg-transparent dark:bg-transparent relative">
+                        {/* Abstract Background Elements */}
+                        <div className="absolute inset-0 opacity-20">
+                                <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                                <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                                <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+                        </div>
+
+                        {/* Grid Pattern Overlay */}
+                        <div
+                                className="absolute inset-1 opacity-0"
+                                style={{
+                                        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                                        backgroundSize: '20px 20px'
+                                }}
+                        />
                         <div className="container mx-auto px-6">
                                 <h2 className="text-4xl font-bold mb-4 text-center">Event Types</h2>
                                 <p className="text-gray-300 text-lg mb-12 text-center max-w-3xl mx-auto">

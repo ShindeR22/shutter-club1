@@ -220,13 +220,14 @@ const Home: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-transparent dark:bg-transparent ">
             {/* Abstract Background Elements */}
             <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
                 <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
                 <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
             </div>
+
             {/* Grid Pattern Overlay */}
             <div
                 className="absolute inset-1 opacity-70"
@@ -236,6 +237,7 @@ const Home: React.FC = () => {
                     backgroundSize: '20px 20px'
                 }}
             />
+
             <Navbar />
             <Head>
                 <title>{studioData.name} | Professional Photography</title>
@@ -254,7 +256,23 @@ const Home: React.FC = () => {
             <Event eventTypes={studioData.eventTypes} />
 
             {/* Portfolio Section */}
-            <section className="py-20">
+            <section className="py-20 bg-transparent dark:bg-transparent relative">
+                {/* Abstract Background Elements */}
+                <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                    <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                    <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+                </div>
+
+                {/* Grid Pattern Overlay */}
+                <div
+                    className="absolute inset-1 opacity-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                    }}
+                />
                 <div className="container mx-auto px-6">
                     <h2 className="text-4xl font-bold mb-12 text-center">Featured Work</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -276,8 +294,120 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
+            {/* Locations Section */}
+            <section className="py-20 bg-transparent dark:bg-transparent relative">
+                {/* Abstract Background Elements */}
+                <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                    <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                    <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+                </div>
+
+                {/* Grid Pattern Overlay */}
+                <div
+                    className="absolute inset-1 opacity-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                    }}
+                />
+                <div className="container mx-auto px-6">
+                    <h2 className="text-4xl font-bold mb-12 text-center">Studio Locations</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {studioData.locations.map((location, index) => (
+                            <div key={index} className="bg-gray-800 p-6 rounded-lg">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-semibold">{location.city}</h3>
+                                    <span className={`px-2 py-1 text-xs rounded ${location.available ? 'bg-green-500 text-black' : 'bg-red-500 text-white'}`}>
+                                        {location.available ? 'Available' : 'Booked'}
+                                    </span>
+                                </div>
+                                <div className="flex items-start mb-4">
+                                    <MapPin className="text-gray-400 mt-1 mr-2" />
+                                    <p className="text-gray-300">{location.address}</p>
+                                </div>
+                                {location.available && (
+                                    <button className="w-full mt-4 bg-white text-black px-4 py-2 rounded-md hover:bg-opacity-90 transition text-sm">Book This Location</button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="py-20 bg-transparent dark:bg-transparent relative">
+                {/* Abstract Background Elements */}
+                <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                    <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                    <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+                </div>
+
+                {/* Grid Pattern Overlay */}
+                <div
+                    className="absolute inset-1 opacity-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                    }}
+                />
+                <div className="container mx-auto px-6">
+                    <h2 className="text-4xl font-bold mb-4 text-center">Client Testimonials</h2>
+                    <p className="text-gray-300 text-lg mb-12 text-center max-w-3xl mx-auto">
+                        What our clients say about their experience with us
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {studioData.reviews.map((review) => (
+                            <div key={review.id} className="bg-gray-800 p-6 rounded-lg">
+                                <div className="flex items-center mb-4">
+                                    <div className="h-12 w-12 rounded-full overflow-hidden mr-4">
+                                        <div className="w-full h-full bg-[url('/api/placeholder/100/100')] bg-cover bg-center"></div>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold">{review.name}</h4>
+                                        <p className="text-gray-400 text-sm">{review.role}</p>
+                                    </div>
+                                </div>
+                                <div className="flex mb-4">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star
+                                            key={i}
+                                            className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`}
+                                        />
+                                    ))}
+                                </div>
+                                <p className="text-gray-300">{review.comment}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+
+
+
+
             {/* Pricing Packages Section */}
-            <section className="py-20 bg-gray-900">
+            <section className="py-20 bg-transparent dark:bg-transparent relative">
+                {/* Abstract Background Elements */}
+                <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                    <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                    <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+                </div>
+
+                {/* Grid Pattern Overlay */}
+                <div
+                    className="absolute inset-1 opacity-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                    }}
+                />
                 <div className="container mx-auto px-6">
                     <h2 className="text-4xl font-bold mb-4 text-center">Pricing Packages</h2>
                     <p className="text-gray-300 text-lg mb-12 text-center max-w-3xl mx-auto">
@@ -326,145 +456,26 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section */}
-            <section className="py-20">
-                <div className="container mx-auto px-6">
-                    <h2 className="text-4xl font-bold mb-4 text-center">Client Testimonials</h2>
-                    <p className="text-gray-300 text-lg mb-12 text-center max-w-3xl mx-auto">
-                        What our clients say about their experience with us
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {studioData.reviews.map((review) => (
-                            <div key={review.id} className="bg-gray-800 p-6 rounded-lg">
-                                <div className="flex items-center mb-4">
-                                    <div className="h-12 w-12 rounded-full overflow-hidden mr-4">
-                                        <div className="w-full h-full bg-[url('/api/placeholder/100/100')] bg-cover bg-center"></div>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold">{review.name}</h4>
-                                        <p className="text-gray-400 text-sm">{review.role}</p>
-                                    </div>
-                                </div>
-                                <div className="flex mb-4">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`}
-                                        />
-                                    ))}
-                                </div>
-                                <p className="text-gray-300">{review.comment}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Review Form Section */}
-            <section className="py-20 bg-gray-900">
-                <div className="container mx-auto px-6">
-                    <div className="max-w-2xl mx-auto">
-                        <h2 className="text-4xl font-bold mb-4 text-center">Share Your Experience</h2>
-                        <p className="text-gray-300 text-lg mb-8 text-center">
-                            We value your feedback! Let us know about your experience with our services.
-                        </p>
-                        <form onSubmit={handleReviewSubmit} className="bg-gray-800 p-8 rounded-lg">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label htmlFor="review-name" className="block text-sm text-gray-400 mb-2">Your Name</label>
-                                    <input
-                                        type="text"
-                                        id="review-name"
-                                        name="name"
-                                        value={reviewFormData.name}
-                                        onChange={handleReviewChange}
-                                        className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="review-email" className="block text-sm text-gray-400 mb-2">Your Email</label>
-                                    <input
-                                        type="email"
-                                        id="review-email"
-                                        name="email"
-                                        value={reviewFormData.email}
-                                        onChange={handleReviewChange}
-                                        className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="mb-6">
-                                <label className="block text-sm text-gray-400 mb-2">Your Rating</label>
-                                <div className="flex space-x-2">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <button
-                                            key={star}
-                                            type="button"
-                                            onClick={() => setReviewFormData({ ...reviewFormData, rating: star })}
-                                            className="focus:outline-none"
-                                        >
-                                            <Star
-                                                className={`w-8 h-8 ${star <= reviewFormData.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`}
-                                            />
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="mb-6">
-                                <label htmlFor="review-comment" className="block text-sm text-gray-400 mb-2">Your Review</label>
-                                <textarea
-                                    id="review-comment"
-                                    name="comment"
-                                    value={reviewFormData.comment}
-                                    onChange={handleReviewChange}
-                                    rows={5}
-                                    className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white resize-none"
-                                    required
-                                ></textarea>
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full bg-purple-600 text-white font-medium py-3 rounded-md hover:bg-purple-700 transition"
-                            >
-                                Submit Review
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            {/* Locations Section */}
-            <section className="py-20 ">
-                <div className="container mx-auto px-6">
-                    <h2 className="text-4xl font-bold mb-12 text-center">Studio Locations</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {studioData.locations.map((location, index) => (
-                            <div key={index} className="bg-gray-800 p-6 rounded-lg">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-semibold">{location.city}</h3>
-                                    <span className={`px-2 py-1 text-xs rounded ${location.available ? 'bg-green-500 text-black' : 'bg-red-500 text-white'}`}>
-                                        {location.available ? 'Available' : 'Booked'}
-                                    </span>
-                                </div>
-                                <div className="flex items-start mb-4">
-                                    <MapPin className="text-gray-400 mt-1 mr-2" />
-                                    <p className="text-gray-300">{location.address}</p>
-                                </div>
-                                {location.available && (
-                                    <button className="w-full mt-4 bg-white text-black px-4 py-2 rounded-md hover:bg-opacity-90 transition text-sm">Book This Location</button>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* Contact Section */}
-            <section className="py-20">
-                <div className="container mx-auto px-6">
-                    <div className="flex flex-col md:flex-row gap-12">
+            <section className="py-20 bg-transparent dark:bg-transparent relative">
+                {/* Abstract Background Elements */}
+                <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                    <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                    <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+                </div>
+
+                {/* Grid Pattern Overlay */}
+                <div
+                    className="absolute inset-1 opacity-0"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                        backgroundSize: '20px 20px'
+                    }}
+                />
+                <div className="container mx-auto px-4">
+                    <div className="flex flex-col md:flex-row gap-10">
                         <div className="w-full md:w-1/2">
                             <h2 className="text-4xl font-bold mb-6">Get In Touch</h2>
                             <p className="text-gray-300 mb-8">Interested in working together? Fill out the form and I&lsquo;ll get back to you within 24 hours.</p>
@@ -508,57 +519,86 @@ const Home: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="w-full md:w-1/2">
-                            <form className="bg-gray-800 p-8 rounded-lg">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                                    <div>
-                                        <label htmlFor="name" className="block text-sm text-gray-400 mb-2">Name</label>
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="email" className="block text-sm text-gray-400 mb-2">Email</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white"
-                                        />
-                                    </div>
+                        <div className='w-full md:w-1/2 z-10'>
+                            <div className="container mx-auto px-6">
+                                <div className="max-w-2xl mx-auto">
+                                    <h2 className="text-4xl font-bold mb-4 text-center">Share Your Experience</h2>
+                                    <p className="text-gray-300  mb-8 text-center">
+                                        We value your feedback! Let us know about your experience with our services.
+                                    </p>
+                                    <form onSubmit={handleReviewSubmit} className="bg-gray-800 p-8 rounded-lg">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                            <div>
+                                                <label htmlFor="review-name" className="block text-sm text-gray-400 mb-2">Your Name</label>
+                                                <input
+                                                    type="text"
+                                                    id="review-name"
+                                                    name="name"
+                                                    value={reviewFormData.name}
+                                                    onChange={handleReviewChange}
+                                                    className="w-full bg-gray-700 border border-gray-600 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-white"
+                                                    required
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="review-email" className="block text-sm text-gray-400 mb-2">Your Email</label>
+                                                <input
+                                                    type="email"
+                                                    id="review-email"
+                                                    name="email"
+                                                    value={reviewFormData.email}
+                                                    onChange={handleReviewChange}
+                                                    className="w-full bg-gray-700 border border-gray-600 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-white"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="mb-6">
+                                            <label className="block text-x text-gray-400 mb-2">Your Rating</label>
+                                            <div className="flex space-x-2">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <button
+                                                        key={star}
+                                                        type="button"
+                                                        onClick={() => setReviewFormData({ ...reviewFormData, rating: star })}
+                                                        className="focus:outline-none"
+                                                    >
+                                                        <Star
+                                                            className={`w-4 h-4 ${star <= reviewFormData.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`}
+                                                        />
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="mb-6">
+                                            <label htmlFor="review-comment" className="block text-sm text-gray-400 mb-2">Your Review</label>
+                                            <textarea
+                                                id="review-comment"
+                                                name="comment"
+                                                value={reviewFormData.comment}
+                                                onChange={handleReviewChange}
+                                                rows={5}
+                                                className="w-full bg-gray-700 border border-gray-600 rounded-md  focus:outline-none focus:ring-1 focus:ring-white resize-none"
+                                                required
+                                            ></textarea>
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            className="w-full bg-purple-600 text-white font-medium py-2 rounded-md hover:bg-purple-700 transition"
+                                        >
+                                            Submit Review
+                                        </button>
+                                    </form>
                                 </div>
-                                <div className="mb-6">
-                                    <label htmlFor="subject" className="block text-sm text-gray-400 mb-2">Subject</label>
-                                    <input
-                                        type="text"
-                                        id="subject"
-                                        className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white"
-                                    />
-                                </div>
-                                <div className="mb-6">
-                                    <label htmlFor="message" className="block text-sm text-gray-400 mb-2">Message</label>
-                                    <textarea
-                                        id="message"
-                                        rows={5}
-                                        className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white resize-none"
-                                    ></textarea>
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="w-full bg-white text-black font-medium py-3 rounded-md hover:bg-opacity-90 transition"
-                                >
-                                    Send Message
-                                </button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="py-12 ">
+            <footer className="py-12 bg-transparent dark:bg-transparent relative">
+
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="mb-6 md:mb-0">

@@ -11,13 +11,30 @@ interface AboutSectionProps {
 
 export default function About({ studioData }: AboutSectionProps) {
     return (
-        <section className="py-20 bg-opacity-80">
+        <section className="py-20 bg-transparent dark:bg-transparent relative ">
+            {/* Abstract Background Elements */}
+            <div className="absolute inset-0 opacity-20">
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl" />
+                <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-600 blur-3xl" />
+                <div className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full bg-indigo-600 blur-3xl" />
+            </div>
+
+            {/* Grid Pattern Overlay */}
+            <div
+                className="absolute inset-1 opacity-0"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                    backgroundSize: '20px 20px'
+                }}
+            />
+
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row gap-12 items-center">
                     <div className="w-full md:w-1/3">
-                        {/* Placeholder for photographer's profile image */}
+
                         <div className="relative h-96 w-full rounded-lg overflow-hidden">
-                            <div className="w-full h-full bg-[url('/api/placeholder/600/800')] bg-cover bg-center"></div>
+                            <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1603574670812-d24560880210?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center"></div>
                         </div>
                     </div>
                     <div className="w-full md:w-2/3">
