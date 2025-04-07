@@ -81,12 +81,12 @@ const Home: React.FC = () => {
             { city: "Miami", address: "321 Ocean Drive, Miami, FL", available: true },
         ] as Location[],
         bestClicks: [
-            { id: 1, title: "Summer Wedding", imgUrl: "/images/wedding.jpg", category: "Wedding" },
-            { id: 2, title: "Corporate Event", imgUrl: "/images/corporate.jpg", category: "Event" },
-            { id: 3, title: "Fashion Editorial", imgUrl: "/images/fashion.jpg", category: "Fashion" },
-            { id: 4, title: "Family Portrait", imgUrl: "/images/family.jpg", category: "Portrait" },
-            { id: 5, title: "Nature Landscape", imgUrl: "/images/nature.jpg", category: "Landscape" },
-            { id: 6, title: "Product Photography", imgUrl: "/images/product.jpg", category: "Commercial" },
+            { id: 1, title: "Summer Wedding", imgUrl: "https://images.unsplash.com/photo-1594397856557-75aca2e35b00?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", category: "Wedding" },
+            { id: 2, title: "Corporate Event", imgUrl: "https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", category: "Event" },
+            { id: 3, title: "Fashion Editorial", imgUrl: "https://images.unsplash.com/photo-1709887139259-e5fdce21afa8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", category: "Fashion" },
+            { id: 4, title: "Family Portrait", imgUrl: "https://images.unsplash.com/photo-1581579186913-45ac3e6efe93?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", category: "Portrait" },
+            { id: 5, title: "Nature Landscape", imgUrl: "https://images.unsplash.com/photo-1500622944204-b135684e99fd?q=80&w=2061&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", category: "Landscape" },
+            { id: 6, title: "Product Photography", imgUrl: "https://images.unsplash.com/photo-1684605345476-29d963cec465?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", category: "Commercial" },
         ] as BestClick[],
         packages: [
             {
@@ -266,7 +266,7 @@ const Home: React.FC = () => {
 
                 {/* Grid Pattern Overlay */}
                 <div
-                    className="absolute inset-1 opacity-0"
+                    className="absolute inset-1 opacity-0   "
                     style={{
                         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
                             linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
@@ -278,12 +278,21 @@ const Home: React.FC = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {studioData.bestClicks.map((click) => (
                             <div key={click.id} className="group relative h-80 rounded-lg overflow-hidden">
-                                <div className="w-full h-full bg-[url('/api/placeholder/600/600')] bg-cover bg-center group-hover:scale-110 transition duration-500"></div>
-                                <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300"></div>
-                                <div className="absolute bottom-0 left-0 right-0 p-6 text-white translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
-                                    <p className="text-sm text-gray-300 mb-2">{click.category}</p>
-                                    <h3 className="text-xl font-semibold mb-2">{click.title}</h3>
-                                    <button className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">View Project →</button>
+                                {/* Apply blur effect using Tailwind's filter and blur classes */}
+                                <div
+                                    className="w-full h-full z-10 opacity-50 bg-cover bg-center filter  group-hover:scale-110 transition duration-500"
+                                    style={{ backgroundImage: `url(${click.imgUrl})` }}
+                                ></div>
+                                {/* Optional overlay for additional styling */}
+                                <div className="absolute inset-0  bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300"></div>
+                                <div className="absolute bottom-0 left-0 right-0 p-6 text-black translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <div className="text-sm  text-black mb-2 "><p >{click.category}</p></div>
+                                    <h3 className="text-xl font-semibold  mb-2 ">{click.title}</h3>
+
+
+                                    <button className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity  duration-300">
+                                        View Project →
+                                    </button>
                                 </div>
                             </div>
                         ))}
