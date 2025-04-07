@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, StarHalf } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 // import { Photographer } from '@/types/photographer';
 export interface Photo {
         id: number;
@@ -30,6 +31,7 @@ interface PhotographerCardProps {
 // components/PhotographerCard.tsx
 export const PhotographerCard = ({ photographer }: PhotographerCardProps) => {
         const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+        const router = useRouter();
 
         useEffect(() => {
                 const interval = setInterval(() => {
@@ -69,9 +71,13 @@ export const PhotographerCard = ({ photographer }: PhotographerCardProps) => {
                 'political-government-event-photography': 'Political Events',
                 'school-college-event-photography': 'School & College',
         };
+        const handleCardClick = () => {
+                // Navigate to a specific link as mentioned in your requirements
+                router.push('/profile');
+        };
 
         return (
-                <Card className="flex flex-row overflow-hidden rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-xl">
+                <Card onClick={handleCardClick} className="flex flex-row overflow-hidden rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-xl">
                         {/* Carousel Side */}
                         <div className="relative w-1/2 h-72">
                                 {photographer.photos.map((photo, index) => (
